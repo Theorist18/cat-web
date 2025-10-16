@@ -81,7 +81,7 @@
       image-rendering: pixelated;
     }
 
-    .play-btn {
+    .play-btn, .back-btn {
       display: inline-flex;
       align-items: center;
       justify-content: center;
@@ -97,7 +97,7 @@
       box-shadow: 0 6px 0 rgba(0, 0, 0, 0.2);
     }
 
-    .play-btn:hover { transform: scale(1.05); }
+    .play-btn:hover, .back-btn:hover { transform: scale(1.05); }
 
     .timer {
       font-size: clamp(10px, 2vw, 13px);
@@ -137,6 +137,11 @@
   <div class="bg"></div>
 
   <div class="container">
+    <!-- Return Button -->
+    <button class="back-btn" onclick="history.back()">
+      <i class="fa-solid fa-arrow-left"></i>&nbsp; Back
+    </button>
+
     <img src="https://github.com/user-attachments/assets/5c90915e-a37a-4dac-b8e7-1d734d214c8c" alt="Cat Icon" />
     <button class="play-btn" id="unmuteBtn"><i class="fa-solid fa-play"></i>&nbsp; Play</button>
     <div class="timer" id="timer">4:39</div>
@@ -184,7 +189,5 @@
     });
   });
 </script>
-
-
 </body>
 </html>
