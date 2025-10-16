@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>For My Mimi 💛</title>
+
+  <!-- Font Awesome -->
+  <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css"
+  />
+
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --bg-sky: #9bd4f8;
+      --outline: #000;
+      --white: #fff;
+      --grayish: rgba(255, 255, 255, 0.7);
+      --overlay: rgba(255, 255, 255, 0.4);
+      --accent: #1a4ceb;
+      --warm: #ffce94;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      min-height: 100vh;
+      font-family: "Press Start 2P", monospace;
+      color: var(--outline);
+      background: var(--bg-sky);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    .bg {
+      position: fixed;
+      inset: 0;
+      background: url("https://github.com/user-attachments/assets/a6d24bbd-3d2e-4787-96d6-cbaaa35645e4")
+        no-repeat center center;
+      background-size: cover;
+      z-index: 0;
+      filter: saturate(1.1) contrast(1.05);
+    }
+
+    .container {
+      z-index: 1;
+      background: var(--grayish);
+      border: 4px solid var(--outline);
+      border-radius: 20px;
+      padding: 20px;
+      width: min(90%, 600px);
+      max-height: 90vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      overflow-y: auto;
+      text-align: center;
+      backdrop-filter: blur(8px);
+      animation: fadeIn 1.5s ease;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: scale(0.95); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    img {
+      width: 180px;
+      height: auto;
+      display: block;
+      object-fit: contain;
+      border: 4px solid var(--outline);
+      border-radius: 16px;
+      margin-bottom: 20px;
+      background: var(--white);
+      image-rendering: pixelated;
+    }
+
+    .play-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--accent);
+      color: var(--white);
+      border: 4px solid var(--outline);
+      border-radius: 16px;
+      padding: 12px 20px;
+      cursor: pointer;
+      font-size: clamp(12px, 2vw, 14px);
+      margin-bottom: 16px;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      box-shadow: 0 6px 0 rgba(0, 0, 0, 0.2);
+    }
+
+    .play-btn:hover { transform: scale(1.05); }
+
+    .timer {
+      font-size: clamp(10px, 2vw, 13px);
+      margin-bottom: 16px;
+      background: var(--white);
+      padding: 6px 12px;
+      border-radius: 10px;
+      border: 2px solid var(--outline);
+    }
+
+    .message {
+      font-size: clamp(10px, 1.8vw, 13px);
+      line-height: 1.6;
+      background: var(--overlay);
+      border-radius: 12px;
+      padding: 20px;
+      border: 2px solid var(--outline);
+      color: #222;
+    }
+
+    .message i { color: var(--warm); margin: 0 6px; }
+
+    #player {
+      position: absolute;
+      width: 0;
+      height: 0;
+      border: 0;
+    }
+
+    @media (max-width: 500px) {
+      img { width: 140px; }
+      .message { padding: 16px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="bg"></div>
+
+  <div class="container">
+    <img src="https://github.com/user-attachments/assets/5c90915e-a37a-4dac-b8e7-1d734d214c8c" alt="Cat Icon" />
+    <button class="play-btn" id="unmuteBtn"><i class="fa-solid fa-play"></i>&nbsp; Play</button>
+    <div class="timer" id="timer">4:39</div>
+
+    <div class="message">
+      <p><i class="fa-solid fa-heart"></i> do u know dat my heart has fully fallen for u, mommy? after all da times i got hurt n failed before, i never thought i’d reach dis point again. but now, here i am, completely caught by u. when i look into ur eyes, da world feels calm, like all da noise inside me finally fades away.</p>
+      <br />
+      <p>now dat ur here, i don’t rush anymore. it’s just u by my side, n i’m thankful for every second of it. i don’t search for answers anymore, cause u are my certainty. i’ll never let go, now dat ur dancin wit me through dis life.</p>
+      <br />
+      <p>if my light had a color, it’s yellow cuz i didn’t expect to feel dis warmth again, like da sun touchin my skin under da soft clouds. thank u, mommy, for makin me believe in love again.</p>
+      <br />
+      <p>and roanne, i want u to know i’ve truly fallen for u too. every moment wit u feels calm, warm, n real. u make my heart feel safe, like i don’t need to hide anymore. thank u, roanne, for bringin back da light in me. <i class="fa-solid fa-sun"></i></p>
+    </div>
+
+    <div id="player"></div>
+  </div>
+
+<script>
+  const btn = document.getElementById('unmuteBtn');
+  const timer = document.getElementById('timer');
+  let totalSeconds = 4 * 60 + 39;
+
+  // Create audio element
+  const audio = new Audio('Dilaw.mp3');
+  audio.loop = true;
+
+  function updateTimer() {
+    const m = Math.floor(totalSeconds / 60);
+    const s = totalSeconds % 60;
+    timer.textContent = `${m}:${s.toString().padStart(2, '0')}`;
+    if (totalSeconds > 0) {
+      totalSeconds--;
+      setTimeout(updateTimer, 1000);
+    }
+  }
+
+  btn.addEventListener('click', () => {
+    btn.innerHTML = '<i class="fa-solid fa-heart"></i>&nbsp; Playing';
+    btn.disabled = true;
+    updateTimer();
+
+    audio.volume = 1.0;
+    audio.play().catch(err => {
+      console.error('Autoplay blocked:', err);
+    });
+  });
+</script>
+
+
+</body>
+</html>
